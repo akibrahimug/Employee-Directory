@@ -22,6 +22,14 @@ body{
     cursor: pointer; /* Add a pointer on hover */
   }
   
+  /* Hidden */
+  .hidden{
+      visibility: collapse;
+  }
+
+  .show{
+      visibility: visible;
+  }
 /* main heading styles */
 h1{
     font-weight: 500;
