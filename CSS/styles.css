@@ -21,7 +21,62 @@ body{
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
   }
-  
+  /* POP UP STYLES */
+
+.pop-up-container{
+    grid-template-rows: 35px;
+    width: 33%;
+    background-color: white;
+    margin: auto;
+    margin-top: 20%;
+    height: 50Vh;
+    border-radius: 20px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.close-pop-up{
+    place-self: end;
+    background: none;
+    border: none;
+    font-weight: 300;
+    font-size: 20px;
+    color: rgb(104, 104, 104);
+    padding-right: 15px;
+    padding-top: 10px;
+}
+
+.pop-up-content{
+    grid-template-rows: 1fr 2fr;
+}
+
+.image-wrap{
+    place-items: center;
+}
+
+.pop-up-container,
+.pop-up-content,
+.image-wrap{
+    display: grid;
+}
+
+hr{
+    width: 80%;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    border-top: 2;
+    border-bottom: 0;
+    border-color:rgb(255, 255, 255);
+}
+
+.text-container{
+    text-align: center;
+}
+
+.text-container h2,
+.text-container p{
+    margin-bottom: 5px;
+}
+
   /* Hidden */
   .hidden{
       visibility: collapse;

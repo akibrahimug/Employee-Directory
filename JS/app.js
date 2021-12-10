@@ -2,7 +2,7 @@
 const container = document.querySelector('.employee-cards');
 const overlay = document.getElementById("overlay");
 const popUpContent = document.querySelector('.pop-up-content')
-const popUpClose = document.querySelector('.pop-up-close')
+const popUpClose = document.querySelector('.close-pop-up')
 // URL
 let employees = [];
 const randomuser = `https://randomuser.me/api/?results=12&inc=name, picture,
@@ -53,7 +53,7 @@ console.log(employeeData)
 
         employeeCard +=`
             <div class="card" data-index="${index}">
-                <img class="avarta" src="${picture.large}">
+                <img class="avatar" src="${picture.large}">
                 <div class="text-container">
                     <h2 class="name">${name.first} ${name.last}</h2>
                     <p class="email">${email}</p>
@@ -73,7 +73,9 @@ const generatePopUp = (index) => {
         let date = new Date(dob.date);
 
         const innerpopup =`
-        <img class="avatar" src="${picture.large}" />
+        <div class="image-wrap">
+            <img class="avatar" src="${picture.large}" />
+        </div>
         <div class="text-container">
         <h2 class="name">${name.first} ${name.last}</h2>
         <p class="email">${email}</p>
@@ -106,7 +108,9 @@ container.addEventListener('click', e => {
 })
 // turn off overlay
 overlay.addEventListener('click', e => {
-    off()
+   if(e.target === popUpClose){
+       off()
+   }
 })
     
     
