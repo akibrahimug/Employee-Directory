@@ -1,8 +1,12 @@
 // Dom elements
 const container = document.querySelector('.employee-cards');
 const overlay = document.getElementById("overlay");
+const popUpContent = document.querySelector('.pop-up-content')
+const popUpClose = document.querySelector('.pop-up-close')
 // URL
-const randomuser = 'https://randomuser.me/api/';
+let employees = [];
+const randomuser = `https://randomuser.me/api/?results=12&inc=name, picture,
+email, location, phone, dob &noinfo &nat=US`;
 
 
 // Overlay functinonality
@@ -23,69 +27,82 @@ async function fetchData(url){
             throw new Error(`HTTP error! status: ${res.status}`)
         }
         const data = await res.json()
-        const response = data.results[0];
-        return response;
+        const response = await data.results;
+        const returnedData = generateHTML(response)
+        return returnedData
     }catch(e){
         console.log(e)
     }
 }
-const returnedData = (html) => {
-    fetchData(randomuser)
-    .then(data => html(data, document.createElement('DIV'), container))
-}
-
+fetchData(randomuser)
 
 // Generating an HTML card for data returned
-const generateHTML = (data, card, wrap) => {
-    const {name, email, location, picture, cell, dob} = data;
-    card.classList.add('card');
-    card.innerHTML = `
-        <img src="${picture.large}">
-        <div class="titles">
-            <h2>${name.first} ${name.last}</h2>
-            <p>${email}</p>
-            <p>${location.city}</p>
-        </div>
-        <div class="more-info hidden">
-            <p>${cell}</p>
-            <p>${location.street.number} ${location.street.name} ${location.city} ${location.state} ${location.postcode}</p>
-            <p>${dob.date}</p>
-        </div>
-    `;
-    wrap.appendChild(card);
+const generateHTML = (employeeData) => {
+console.log(employeeData)
+    employees = employeeData;
+
+    // store the employee HTML as we create it
+    let employeeCard = '';
+
+    // loop through each employee and create HTMl markup
+    employees.forEach((employee, index) => {
+        let name = employee.name;
+        let email = employee.email;
+        let city = employee.location.city;
+        let picture = employee.picture;
+
+        employeeCard +=`
+            <div class="card" data-index="${index}">
+                <img class="avarta" src="${picture.large}">
+                <div class="text-container">
+                    <h2 class="name">${name.first} ${name.last}</h2>
+                    <p class="email">${email}</p>
+                    <p class="city">${city}</p>
+                </div>
+            </div>
+        `
+    })
+    container.innerHTML = employeeCard;
 }
 
-// looping through the url to return 12 requests
-const employees = () => {
-    for(let i = 1; i <= 12; i++){
-         returnedData(generateHTML)
-    }    
-}
-employees()
+const generatePopUp = (index) => {
+    let {name, dob, phone, email, 
+        location: {city, street, state, 
+        postcode}, picture} = employees[index];
 
-// const overlayInfo = (btn) => {
-//     const image = btn.querySelector('img');
-//     const titles = btn.querySelector('.titles');
-//     const moreInfo = btn.querySelector('.more-info');
-//     const wrapper = document.createElement('DIV');
-//     wrapper.classList.add('wrapper')
-//     moreInfo.classList.add('show')
-//     wrapper.appendChild(image)
-//     wrapper.appendChild(titles)
-//     wrapper.appendChild(moreInfo)
-//     overlay.appendChild(wrapper)
-    
-// }
+        let date = new Date(dob.date);
+
+        const innerpopup =`
+        <img class="avatar" src="${picture.large}" />
+        <div class="text-container">
+        <h2 class="name">${name.first} ${name.last}</h2>
+        <p class="email">${email}</p>
+        <p class="address">${city}</p>
+        <hr />
+        <p>${phone}</p>
+        <p class="address">${street}, ${state} ${postcode}</p>
+        <p>Birthday:
+        ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
+        </div>
+        `
+
+        on()
+        popUpContent.innerHTML = innerpopup;
+}
+
+
 
 // Click events
 container.addEventListener('click', e => {
-    const buttons = container.querySelectorAll('.card');
-    buttons.forEach(button => {
-        if(e.target === button){
-            on();
-        //    overlayInfo(button)
-        }
-    })
+//   make sure the click is not on the container itself
+    if(e.target !== container){
+        // select the card element based on its proximity to the actual element 
+        // clicked
+        const card = e.target.closest(".card");
+        const index = card.getAttribute('data-index');
+
+        generatePopUp(index)
+    }
 })
 // turn off overlay
 overlay.addEventListener('click', e => {
