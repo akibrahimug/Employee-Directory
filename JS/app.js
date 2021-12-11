@@ -38,7 +38,7 @@ fetchData(randomuser)
 
 // Generating an HTML card for data returned
 const generateHTML = (employeeData) => {
-console.log(employeeData)
+// console.log(employeeData)
     employees = employeeData;
 
     // store the employee HTML as we create it
@@ -82,7 +82,7 @@ const generatePopUp = (index) => {
         <p class="address">${city}</p>
         <hr />
         <p>${phone}</p>
-        <p class="address">${street}, ${state} ${postcode}</p>
+        <p class="address">${street.name} ${street.number}, ${state} ${postcode}</p>
         <p>Birthday:
         ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
         </div>
