@@ -5,7 +5,7 @@ const popUpContent = document.querySelector('.pop-up-content')
 const popUpClose = document.querySelector('.close-pop-up')
 // URL
 let employees = [];
-const randomuser = `https://randomuser.me/api/?results=12&inc=name, picture,
+const randomuser = `https://randomuser.me/api/?results=96&inc=name, picture,
 email, location, phone, dob &noinfo &nat=US`;
 
 
